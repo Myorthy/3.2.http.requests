@@ -3,7 +3,7 @@ import requests
 API_KEY = 'trnsl.1.1.20161025T233221Z.47834a66fd7895d0.a95fd4bfde5c1794fa433453956bd261eae80152'
 URL = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
 
-def translate_it(text, to_lang):
+def translate_it(text, to_lang, from_lang='ru'):
     """
     https://translate.yandex.net/api/v1.5/tr.json/translate ?
     key=<API-ключ>
@@ -20,7 +20,7 @@ def translate_it(text, to_lang):
     params = {
         'key': API_KEY,
         'text': text,
-        'lang': '{}-ru'.format(to_lang),
+        'lang': '{}-{}'.format(to_lang, from_lang),
     }
 
 
@@ -41,13 +41,15 @@ elif language0 == 'французский':
 else:
     to_lang = 'en'
 
-# language1 = input.lower('Введите язык на который перевести: ')
-#     if language1 != 'русский':
-#         print('Выберите русский язык!')
+language1 = input('Введите язык на который перевести: ')
+if language1 == 'английский':
+    from_lang = 'en'
+else:
+    from_lang = 'ru'
 
 with open(link0, 'r', encoding='utf-8') as f:
     text = f.read()
-    text = translate_it(text, to_lang)
+    text = translate_it(text, to_lang, from_lang)
     print(text)
 
 with open(link1, 'w', encoding='utf-8') as f:
